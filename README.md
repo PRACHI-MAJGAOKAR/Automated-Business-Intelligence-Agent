@@ -6,11 +6,11 @@ selects chart types autonomously, detects anomalies, and generates PDF reports.
 ## Architecture
 
 5-agent LangGraph pipeline:
-1. **SQL Agent** — Text-to-SQL with retry on execution failure
-2. **Viz Agent** — LLM selects chart type based on data shape (bar/line/scatter/heatmap/pie)
-3. **Anomaly Agent** — Prophet for time series, IsolationForest for tabular data
-4. **Narrative Agent** — 3-line executive summary via Gemini Flash
-5. **PDF Agent** — Full ReportLab report with chart, anomaly table, and summary
+1. **SQL Agent** - Text-to-SQL with retry on execution failure
+2. **Viz Agent** - LLM selects chart type based on data shape (bar/line/scatter/heatmap/pie)
+3. **Anomaly Agent** - Prophet for time series, IsolationForest for tabular data
+4. **Narrative Agent** - 3-line executive summary via Gemini Flash
+5. **PDF Agent** - Full ReportLab report with chart, anomaly table, and summary
 
 ## Stack
 
