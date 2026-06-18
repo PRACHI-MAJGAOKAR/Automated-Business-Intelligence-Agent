@@ -1,0 +1,32 @@
+# BI Agent — NSE Stock Analytics
+# Install: pip install -r requirements.txt
+
+# LLM & orchestration
+langchain-google-genai>=2.0.0
+langgraph>=1.2.0
+langchain-core>=0.3.0
+
+# Data
+pandas>=2.0.0
+numpy>=1.24.0
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0      # for PostgreSQL; not needed for SQLite
+yfinance>=0.2.40            # NSE data download (seed_db.py only)
+
+# Visualisation
+plotly>=5.18.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Anomaly detection
+prophet>=1.1.5
+scikit-learn>=1.3.0
+
+# PDF generation
+reportlab>=4.0.0
+
+# Frontend
+streamlit>=1.30.0
+
+# Utilities
+kaleido>=0.2.1              # optional: plotly static image export (requires Chrome)

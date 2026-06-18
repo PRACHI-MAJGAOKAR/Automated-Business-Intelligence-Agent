@@ -1,0 +1,29 @@
+# Environment variables - NEVER upload this
+.env
+
+# Database file
+*.db
+
+# Virtual environment
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Output PDFs
+output/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
