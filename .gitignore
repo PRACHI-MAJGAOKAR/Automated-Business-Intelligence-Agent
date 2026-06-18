@@ -1,4 +1,4 @@
-# Environment variables - NEVER upload this
+# Environment variables
 .env
 
 # Database file
