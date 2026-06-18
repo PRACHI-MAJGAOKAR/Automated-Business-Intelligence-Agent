@@ -1,7 +1,7 @@
 """
 agents/sql_agent.py
--------------------
-Agent 1 — Text-to-SQL
+
+Agent 1 : Text-to-SQL
 
 Responsibilities:
   1. Introspect the database schema once per call
@@ -62,13 +62,13 @@ def sql_agent(state: AgentState) -> AgentState:
 
     schema = get_schema_description()
 
-    # ── First attempt ─────────────────────────────────────────────────────────
+    # First attempt
     sql = call_llm(_SQL_PROMPT.format(schema=schema, question=question)).strip()
     logger.info("[sql_agent] Generated SQL:\n%s", sql)
 
     df, error = execute_query(sql)
 
-    # ── Retry once on error ───────────────────────────────────────────────────
+    # Retry once on error 
     if error:
         logger.warning("[sql_agent] Execution error: %s — retrying.", error)
         sql = call_llm(
