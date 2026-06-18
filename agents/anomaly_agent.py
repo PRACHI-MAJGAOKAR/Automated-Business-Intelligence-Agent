@@ -1,7 +1,7 @@
 """
 agents/anomaly_agent.py
------------------------
-Agent 3 — Anomaly Detection
+
+Agent 3 : Anomaly Detection
 
 Decision logic:
   - If the DataFrame has a date/datetime column AND a numeric column
@@ -35,8 +35,7 @@ logging.getLogger("prophet").setLevel(logging.WARNING)
 logging.getLogger("cmdstanpy").setLevel(logging.WARNING)
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
-
+#  Helpers 
 def _find_date_col(df: pd.DataFrame) -> str | None:
     """Return the first column that can be parsed as dates, or None.
     Supports object, string (StringDtype), and native datetime64 columns.
@@ -64,7 +63,7 @@ def _find_numeric_col(df: pd.DataFrame, exclude: str | None = None) -> str | Non
     return None
 
 
-# ── Prophet path ──────────────────────────────────────────────────────────────
+#  Prophet path
 
 def _prophet_anomalies(
     df: pd.DataFrame, date_col: str, value_col: str
@@ -107,7 +106,7 @@ def _prophet_anomalies(
     return anomaly_df["ds"].tolist(), anomaly_df["y"].tolist()
 
 
-# ── IsolationForest path ──────────────────────────────────────────────────────
+# IsolationForest path 
 
 def _isolation_forest_anomalies(
     df: pd.DataFrame,
@@ -133,7 +132,7 @@ def _isolation_forest_anomalies(
     return flagged_indices, flagged_rows
 
 
-# ── Explanation builder ───────────────────────────────────────────────────────
+# Explanation builder 
 
 def _build_explanation(
     method: str,
@@ -171,7 +170,7 @@ def _build_explanation(
     return "Anomaly detection ran but found no significant outliers in this dataset."
 
 
-# ── LangGraph node ────────────────────────────────────────────────────────────
+# LangGraph node
 
 def anomaly_agent(state: AgentState) -> AgentState:
     """LangGraph node: DataFrame → anomaly flags + explanation"""
@@ -195,7 +194,7 @@ def anomaly_agent(state: AgentState) -> AgentState:
     flagged_rows:   list[dict] | None = None
     method = "none"
 
-    # ── Route: Prophet for time series, IsolationForest otherwise ────────────
+    #  Prophet for time series, IsolationForest otherwise 
     if date_col and value_col:
         logger.info(
             "[anomaly_agent] Using Prophet on (%s, %s).", date_col, value_col
