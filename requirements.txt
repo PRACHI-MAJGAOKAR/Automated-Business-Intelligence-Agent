@@ -1,4 +1,4 @@
-# BI Agent — NSE Stock Analytics
+# BI Agent : NSE Stock Analytics
 # Install: pip install -r requirements.txt
 
 # LLM & orchestration
@@ -29,4 +29,4 @@ reportlab>=4.0.0
 streamlit>=1.30.0
 
 # Utilities
-kaleido>=0.2.1              # optional: plotly static image export (requires Chrome)
+kaleido>=0.2.1              
