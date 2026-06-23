@@ -1,31 +1,7 @@
 """
 pipeline.py
------------
 LangGraph pipeline — wires all 5 agents into a directed state graph.
 
-Graph structure:
-
-  START
-    │
-    ▼
-  sql_agent          (Text → SQL → DataFrame)
-    │
-    ├─ [sql failed] ──────────────────────────► END  (error state)
-    │
-    ▼
-  viz_agent          (DataFrame → chart type → Plotly fig + PNG)
-    │
-    ▼
-  anomaly_agent      (DataFrame → Prophet / IsolationForest → flags)
-    │
-    ▼
-  narrative_agent    (full context → 3-line executive summary)
-    │
-    ▼
-  pdf_agent          (full state → PDF written to disk)
-    │
-    ▼
-  END
 """
 
 from __future__ import annotations
@@ -45,7 +21,7 @@ from core.state             import AgentState
 logger = logging.getLogger(__name__)
 
 
-# ── Routing function ──────────────────────────────────────────────────────────
+#  Routing function
 
 def _route_after_sql(state: AgentState) -> Literal["viz_agent", "__end__"]:
     """
@@ -61,7 +37,7 @@ def _route_after_sql(state: AgentState) -> Literal["viz_agent", "__end__"]:
     return "viz_agent"
 
 
-# ── Build graph ───────────────────────────────────────────────────────────────
+# Build graph 
 
 def build_pipeline() -> StateGraph:
     graph = StateGraph(AgentState)
@@ -92,7 +68,7 @@ def build_pipeline() -> StateGraph:
     return graph.compile()
 
 
-# ── Public singleton ──────────────────────────────────────────────────────────
+# Public singleton
 pipeline = build_pipeline()
 
 
