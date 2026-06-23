@@ -24,10 +24,10 @@ from datetime import datetime
 from pipeline import run_pipeline
 import streamlit as st
 
-# ── Path setup ─────────────────────────────────────────────────────────────────
+# Path 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# ── Page config  ─────────────────────────────
+# Page config
 st.set_page_config(
     page_title="Prachi NSE Stock Analytics",
     page_icon="🪙",
@@ -41,7 +41,7 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 
-# ── Session state initialisation ──────────────────────────────────────────────
+# Session state initialisation
 if "history" not in st.session_state:
     st.session_state.history: list[dict] = []   # list of completed run dicts
 if "session_id" not in st.session_state:
@@ -49,7 +49,7 @@ if "session_id" not in st.session_state:
 
 MAX_HISTORY = 10
 
-# ── Sidebar ───────────────────────────────────────────────────────────────────
+# Sidebar 
 with st.sidebar:
     st.title("Prachi Majgaokar")
     st.caption("NSE Stock Market Analytics")
@@ -90,7 +90,7 @@ with st.sidebar:
         if st.button(ex, key=f"ex_{ex[:20]}", use_container_width=True):
             st.session_state["prefill"] = ex
 
-# ── Main area ─────────────────────────────────────────────────────────────────
+#  Main area container
 st.title("Business Intelligence Agent")
 st.caption(
     "Ask any question about NSE stock data in plain English. "
@@ -115,7 +115,7 @@ with col_clear:
         st.session_state.history = []
         st.rerun()
 
-# ── Run pipeline ──────────────────────────────────────────────────────────────
+# Run pipeline
 if run_btn and question.strip():
     st.divider()
 
@@ -143,7 +143,7 @@ if run_btn and question.strip():
             st.error(f"Pipeline error: {exc}")
             st.stop()
 
-    # ── Update status indicators ──────────────────────────────────────────────
+    # Update status indicators 
     sql_ok = not result.get("sql_error")
     set_status(0, labels[0], "done" if sql_ok else "error")
     set_status(1, labels[1], "done" if result.get("plotly_fig") else "error")
@@ -151,7 +151,7 @@ if run_btn and question.strip():
     set_status(3, labels[3], "done" if result.get("executive_summary") else "error")
     set_status(4, labels[4], "done" if result.get("pdf_path") else "error")
 
-    # ── Error state ───────────────────────────────────────────────────────────
+    # Error state
     if result.get("sql_error"):
         st.error(f"SQL generation failed: {result['sql_error']}")
         st.code(result.get("generated_sql", ""), language="sql")
@@ -159,17 +159,17 @@ if run_btn and question.strip():
 
     st.divider()
 
-    # ── Generated SQL ─────────────────────────────────────────────────────────
+    # Generated SQL
     with st.expander("Generated SQL", expanded=False):
         st.code(result.get("generated_sql", ""), language="sql")
 
-    # ── Query result ──────────────────────────────────────────────────────────
+    # Query result 
     df = result.get("query_result")
     if df is not None and not df.empty:
         with st.expander(f"Query Result — {len(df)} rows", expanded=False):
             st.dataframe(df, use_container_width=True)
 
-    # ── Chart ─────────────────────────────────────────────────────────────────
+    # Chart 
     st.subheader(f" {result.get('chart_title', 'Visualisation')}")
     st.caption(
         f"Chart type: **{result.get('chart_type', 'N/A')}** — "
@@ -181,7 +181,7 @@ if run_btn and question.strip():
     else:
         st.warning("No chart could be generated for this query result.")
 
-    # ── Anomaly detection ─────────────────────────────────────────────────────
+    # Anomaly detection 
     st.subheader(" Anomaly Detection")
     st.caption(f"Method: **{result.get('anomaly_method', 'N/A').replace('_',' ').title()}**")
     st.write(result.get("anomaly_explanation", ""))
@@ -193,7 +193,7 @@ if run_btn and question.strip():
         anom_df = pd.DataFrame({"Date": anomaly_dates, "Value": anomaly_values})
         st.dataframe(anom_df, use_container_width=True)
 
-    # ── Executive summary ─────────────────────────────────────────────────────
+    # Executive summary 
     st.subheader(" Executive Summary")
     summary = result.get("executive_summary", "")
     for line in summary.splitlines():
@@ -201,7 +201,7 @@ if run_btn and question.strip():
         if line:
             st.markdown(line)
 
-    # ── PDF download ──────────────────────────────────────────────────────────
+    # PDF download 
     st.divider()
     pdf_path = result.get("pdf_path", "")
     if pdf_path and os.path.exists(pdf_path):
@@ -219,7 +219,7 @@ if run_btn and question.strip():
     else:
         st.warning("PDF could not be generated. Check logs for details.")
 
-    # ── Save to history ───────────────────────────────────────────────────────
+    # Save to history
     history_entry = {
         "question":       question.strip(),
         "timestamp":      datetime.now().strftime("%d %b %Y %H:%M"),
