@@ -1,4 +1,4 @@
-# ── Build stage ───────────────────────────────────────────────────────────────
+#Build 
 FROM python:3.11-slim AS base
 
 WORKDIR /app
@@ -20,7 +20,7 @@ COPY . .
 # Create output directory
 RUN mkdir -p /app/output
 
-# ── Runtime ────────────────────────────────────────────────────────────────────
+# Runtime
 EXPOSE 8501
 
 # Environment variables (override at runtime with -e or docker-compose)
